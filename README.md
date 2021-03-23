@@ -1,8 +1,8 @@
-# spy-among-us
-Repository containing GUI and client files for CS 192 project, Spy Among Us
+# Spy Among Us Game
+This is a course requirements for CS191/192 Software Engineering Courses of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman under the guidance of Ma. Rowena C. Solamo for AY 2020-2021.
 
-Ron Surara
+Frianeza, Keno Roberto
 
-Marie Francheska Masangkay
+Masangkay, Marie Francheska
 
-Keno Frianeza
+Surara, Ron
