@@ -5,4 +5,4 @@ Frianeza, Keno Roberto
 
 Masangkay, Marie Francheska
 
-Surara, Ron
+Surara, Ron Christian
