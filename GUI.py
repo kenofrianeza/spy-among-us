@@ -39,6 +39,7 @@ def exit():
 		res = requests.post('https://calm-river-76254.herokuapp.com/message', data={"message": 3, "id": playerId})
 		res.raise_for_status()
 		servermsg = res.json()
+		print(servermsg)
 		return servermsg
 
 def start():
@@ -53,7 +54,13 @@ def status_check():
 		servermsg = res.json()
 		print(servermsg)
 		return servermsg
-		
+
+def get_role_and_location():
+		res = requests.post('https://calm-river-76254.herokuapp.com/message', data={"message": 6, "id": playerId})
+		res.raise_for_status()
+		servermsg = res.json()
+		print(servermsg)
+		return servermsg	
 
 ##############GUI
 def update():
@@ -64,6 +71,17 @@ def update():
 		if servermsg["arg1"] == 2:
 			inLobby = False
 			inGame = True
+			servermsg2 = get_role_and_location()
+			#arg1 = 1 or 0 (role)
+			if servermsg2["arg1"] == 1:
+				#1 is spy
+				roleLbl.config(text="You are the spy!",bg="red")
+				displayPopUp("You are the spy!\nYou cannot see the location. :(")
+				#locationLbl.config(text="You cannot see the location.")
+			else:
+				roleLbl.config(text="You are an innocent.")
+				displayPopUp("You are an innocent.\nYou are in a/an "+servermsg2["arg2"]+".")
+				#locationLbl.config(text="You are in a/an "+servermsg2["arg2"]+".")
 			startGameFr.tkraise()
 	window.after(10000,update)
 
@@ -130,21 +148,22 @@ def onClickEnterLobbyCode():
 def onClickExit():
 	#reset global vars
 	servermsg = exit()
-	if servermsg["arg1"] == "ok":
-		global playerName
-		global lobbyCode
-		global playerId
-		global inLobby
-		global inGame
-		playerName = ""
-		lobbyCode = ""
-		playerId = ""
-		inLobby = False
-		inGame = False
-		displayPopUp("Successfully exited lobby!")
-		hostOrJoinLobbyFr.tkraise()
-	else:
-		displayPopUp(arg1)
+	#NOTE: For now, ignore arg1, always exit
+	#if servermsg["arg1"] == "ok":
+	global playerName
+	global lobbyCode
+	global playerId
+	global inLobby
+	global inGame
+	playerName = ""
+	lobbyCode = ""
+	playerId = ""
+	inLobby = False
+	inGame = False
+	displayPopUp("Successfully exited lobby!")
+	hostOrJoinLobbyFr.tkraise()
+	#else:
+		#displayPopUp("Failed to exit lobby.")
 
 def onClickStartGame():
 	#startGameFr.tkraise()
@@ -195,6 +214,11 @@ exitBtn.place(x=180,y=500)
 startGameBtn.place(x=250,y=500)
 ###############startGameFr
 gameNameLbl4 = Label(startGameFr,text="Spy Among Us",font=("bold",30),fg="white",bg="black",width=22,pady=30).place(x=0,y=0)
+
+roleLbl = Label(startGameFr,text="Display role here",font=("bold",12),fg="black",width=22,pady=30)
+roleLbl.place(x=175,y=220)
+#locationLbl = Label(startGameFr,text="Display location here",font=("bold",12),fg="black",width=22,pady=30)
+#locationLbl.place(x=175,y=300)
 
 exitBtn2 = Button(startGameFr,relief="solid",text="Exit",fg="white",bg="black",command=onClickExit)
 exitBtn2.place(x=180,y=500)
